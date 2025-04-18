@@ -393,6 +393,7 @@ Temporary Items
 .apdisk
 
 # Local
+package-lock.json
 .env
 .env.*
 dist
