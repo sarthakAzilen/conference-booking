@@ -15,6 +15,7 @@ export class BookingsService {
     const booking = this.bookingsRepository.create({
       ...bookingData,
       attendees: bookingData.attendees || [], // Default to an empty array if not provided
+      status: bookingData.status || 'pending', // Default to 'pending' if not provided
     });
     await this.bookingsRepository.save(booking);
     return { message: 'Booking created successfully', booking };

@@ -31,4 +31,7 @@ export class CreateBookingDto {
     required: false,
   })
   project?: string;
+
+  @ApiProperty({ description: 'Status of the booking', default: 'pending' })
+  status: string;
 }

@@ -1,6 +1,6 @@
 import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 
-@Entity()
+@Entity('booking') // Ensure the table name matches the database
 export class Booking {
   @PrimaryGeneratedColumn()
   id: number;
@@ -20,12 +20,15 @@ export class Booking {
   @Column()
   room: string;
 
-  @Column({ nullable: true }) // Make the duration column nullable
+  @Column({ nullable: true })
   duration: number;
 
   @Column({ nullable: true })
   project: string;
 
-  @Column({ type: 'json', nullable: true }) // Add attendees column as a JSON array
+  @Column({ type: 'json', nullable: true })
   attendees: string[];
+
+  @Column({ default: 'pending' })
+  status: string;
 }
