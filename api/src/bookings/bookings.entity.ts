@@ -19,4 +19,10 @@ export class Booking {
 
   @Column()
   room: string;
+
+  @Column({ nullable: true }) // Make the duration column nullable
+  duration: number;
+
+  @Column({ type: 'json', nullable: true }) // Add attendees column as a JSON array
+  attendees: string[];
 }
