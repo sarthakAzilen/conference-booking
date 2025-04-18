@@ -25,4 +25,10 @@ export class CreateBookingDto {
     required: false,
   })
   attendees?: string[];
+
+  @ApiProperty({
+    description: `Project associated with the booking`,
+    required: false,
+  })
+  project?: string;
 }
