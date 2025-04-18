@@ -1,8 +1,15 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import * as dotenv from 'dotenv';
+
+dotenv.config(); // Load environment variables
 
 async function bootstrap() {
+  if (!process.env.NODE_ENV) {
+    throw new Error('Environment variables not loaded. Ensure .env file is configured.');
+  }
+
   const app = await NestFactory.create(AppModule);
   app.enableCors(); // Enable CORS
 
