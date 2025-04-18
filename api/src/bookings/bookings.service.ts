@@ -1,25 +1,22 @@
 import { Injectable } from '@nestjs/common';
-
-export interface Booking {
-  // Export the interface
-  name: string;
-  date: string;
-  time: string;
-  room: string;
-}
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { Booking } from './bookings.entity';
 
 @Injectable()
 export class BookingsService {
-  private bookings: Booking[] = [];
+  constructor(
+    @InjectRepository(Booking)
+    private readonly bookingsRepository: Repository<Booking>,
+  ) {}
 
-  createBooking(bookingData: Booking) {
-    this.bookings.push(bookingData);
-    console.log({ bookings: this.bookings });
-    return { message: 'Booking created successfully', booking: bookingData };
+  async createBooking(bookingData: Booking) {
+    const booking = this.bookingsRepository.create(bookingData);
+    await this.bookingsRepository.save(booking);
+    return { message: 'Booking created successfully', booking };
   }
 
-  getAllBookings(): Booking[] {
-    // Explicitly specify the return type
-    return this.bookings;
+  async getAllBookings(): Promise<Booking[]> {
+    return this.bookingsRepository.find();
   }
 }
