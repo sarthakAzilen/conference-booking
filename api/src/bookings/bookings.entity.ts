@@ -1,9 +1,10 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, Column, PrimaryColumn, BeforeInsert } from 'typeorm';
+import { v4 as uuidv4 } from 'uuid';
 
 @Entity('booking') // Ensure the table name matches the database
 export class Booking {
-  @PrimaryGeneratedColumn()
-  id: number;
+  @PrimaryColumn()
+  id: string;
 
   @Column()
   name: string;
@@ -31,4 +32,9 @@ export class Booking {
 
   @Column({ default: 'pending' })
   status: string;
+
+  @BeforeInsert()
+  generateId() {
+    this.id = uuidv4();
+  }
 }
