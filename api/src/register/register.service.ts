@@ -4,12 +4,14 @@ import { Repository } from 'typeorm';
 import { Register } from './register.entity';
 import { CreateRegisterDto } from './dto/create-register.dto';
 import * as bcrypt from 'bcrypt';
+import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class RegisterService {
   constructor(
     @InjectRepository(Register)
     private readonly registerRepository: Repository<Register>,
+    private readonly jwtService: JwtService, // Inject JwtService
   ) {}
 
   async create(createRegisterDto: CreateRegisterDto, userRole: string) {
@@ -21,8 +23,24 @@ export class RegisterService {
       ...createRegisterDto,
       password: hashedPassword, // Store the hashed password
     });
-    await this.registerRepository.save(register);
-    return { message: 'User registered successfully', register };
+
+    try {
+      await this.registerRepository.save(register);
+    } catch (error) {
+      if (error.code === '23505') {
+        // PostgreSQL unique violation error code
+        throw new ForbiddenException('Employee ID must be unique.');
+      }
+      throw error; // Re-throw other errors
+    }
+
+    // Generate JWT token
+    const token = this.jwtService.sign({
+      id: register.id,
+      role: register.role,
+    });
+
+    return { message: 'User registered successfully', register, token };
   }
 
   async findByEmail(email: string): Promise<Register | undefined | null> {

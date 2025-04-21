@@ -20,6 +20,7 @@ async function bootstrap() {
     .setTitle('Conference Booking API')
     .setDescription('API documentation for the Conference Booking application')
     .setVersion('1.0')
+    .addBearerAuth({ type: 'http', scheme: 'bearer', bearerFormat: 'JWT' }) // Add Bearer Auth globally
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);

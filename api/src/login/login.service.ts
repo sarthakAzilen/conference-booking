@@ -30,7 +30,12 @@ export class LoginService {
     if (!isPasswordValid) {
       throw new UnauthorizedException('Invalid credentials');
     }
-    const token = this.jwtService.sign({ id: user.id, role: user.role });
+    const token = this.jwtService.sign(
+      { id: user.id, role: user.role },
+      {
+        secret: process.env.JWT_SECRET ?? 'default_secret', // Ensure this matches the .env JWT_SECRET
+      },
+    );
     return { message: 'Login successful', token };
   }
 }
