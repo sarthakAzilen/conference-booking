@@ -1,6 +1,7 @@
 import { DataSource } from 'typeorm';
 import * as dotenv from 'dotenv';
 import { Booking } from './src/bookings/bookings.entity'; // Import your entities
+import { Register } from './src/register/register.entity';
 
 dotenv.config(); // Load environment variables
 
@@ -11,7 +12,7 @@ export const AppDataSource = new DataSource({
   username: process.env.DB_USERNAME || 'postgres',
   password: process.env.DB_PASSWORD || 'admin',
   database: process.env.DB_NAME || 'conference_booking',
-  entities: [Booking], // Add all your entities here
+  entities: [Booking, Register], // Add all your entities here
   migrations: ['./src/migrations/*.ts'], // Path to migrations
   synchronize: false, // Disable in production
   migrationsRun: true, // Automatically run migrations
