@@ -1,4 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { Gender, Role } from '../register.entity';
 
 export class CreateRegisterDto {
   @ApiProperty({ example: 'John Doe' })
@@ -7,17 +8,14 @@ export class CreateRegisterDto {
   @ApiProperty({ example: 'john.doe@example.com' })
   email: string;
 
-  @ApiProperty({ example: 'Male', enum: ['Male', 'Female', 'Other'] })
-  gender: 'Male' | 'Female' | 'Other';
+  @ApiProperty({ example: Gender.Male, enum: Gender })
+  gender: Gender;
 
   @ApiProperty({ example: 'EMP12345' })
   employeeId: string;
 
-  @ApiProperty({
-    example: 'Employee',
-    enum: ['Employee', 'HR Admin', 'Facility Admin', 'Super Admin'],
-  })
-  role: 'Employee' | 'HR Admin' | 'Facility Admin' | 'Super Admin';
+  @ApiProperty({ example: Role.Employee, enum: Role })
+  role: Role;
 
   @ApiProperty({ example: 'password123' })
   password: string;

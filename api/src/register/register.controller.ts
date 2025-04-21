@@ -4,6 +4,7 @@ import { CreateRegisterDto } from './dto/create-register.dto';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard'; // Import the guard
 import { ApiTags, ApiBearerAuth } from '@nestjs/swagger'; // Replace ApiHeader with ApiBearerAuth
 import { Request } from 'express'; // Import Request type from Express
+import { Role } from './register.entity';
 
 @ApiTags('Register')
 @ApiBearerAuth() // Use ApiBearerAuth to indicate Bearer token usage
@@ -15,7 +16,7 @@ export class RegisterController {
   @UseGuards(JwtAuthGuard) // Apply the guard
   async create(
     @Body() createRegisterDto: CreateRegisterDto,
-    @Req() req: Request & { user: { role: string } }, // Update type to include headers
+    @Req() req: Request & { user: { role: Role } }, // Update type to include headers
   ) {
     const userRole = req.user.role; // Extract user role from the JWT payload
 

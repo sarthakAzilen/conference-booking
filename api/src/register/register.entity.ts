@@ -1,5 +1,18 @@
 import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 
+export enum Gender {
+  Male = 'Male',
+  Female = 'Female',
+  Other = 'Other',
+}
+
+export enum Role {
+  Employee = 'Employee',
+  HRAdmin = 'HR Admin',
+  FacilityAdmin = 'Facility Admin',
+  SuperAdmin = 'Super Admin',
+}
+
 @Entity('register') // This is the user table
 export class Register {
   @PrimaryGeneratedColumn('uuid')
@@ -11,14 +24,14 @@ export class Register {
   @Column({ unique: true })
   email: string;
 
-  @Column()
-  gender: 'Male' | 'Female' | 'Other';
+  @Column({ type: 'enum', enum: Gender, nullable: true }) // Allow null values
+  gender: Gender | null;
 
   @Column({ unique: true })
   employeeId: string;
 
-  @Column()
-  role: 'Employee' | 'HR Admin' | 'Facility Admin' | 'Super Admin';
+  @Column({ type: 'enum', enum: Role, nullable: true }) // Allow null values
+  role: Role | null;
 
   @Column()
   password: string;

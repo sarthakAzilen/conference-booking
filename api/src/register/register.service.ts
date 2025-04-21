@@ -1,7 +1,7 @@
 import { Injectable, ForbiddenException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Register } from './register.entity';
+import { Register, Role } from './register.entity';
 import { CreateRegisterDto } from './dto/create-register.dto';
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
@@ -14,8 +14,8 @@ export class RegisterService {
     private readonly jwtService: JwtService, // Inject JwtService
   ) {}
 
-  async create(createRegisterDto: CreateRegisterDto, userRole: string) {
-    if (userRole !== 'HR Admin') {
+  async create(createRegisterDto: CreateRegisterDto, userRole: Role) {
+    if (userRole !== Role.HRAdmin) {
       throw new ForbiddenException('Only HR Admins can register users.');
     }
     const hashedPassword = await bcrypt.hash(createRegisterDto.password, 10); // Encrypt the password
