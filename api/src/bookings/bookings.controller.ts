@@ -1,4 +1,4 @@
-import { Controller, Post, Body, Get } from '@nestjs/common';
+import { Controller, Post, Body, Get, Patch, Param } from '@nestjs/common';
 import { BookingsService } from './bookings.service';
 import { CreateBookingDto } from './dto/create-booking.dto';
 import { ApiTags, ApiOperation, ApiBody } from '@nestjs/swagger';
@@ -19,5 +19,34 @@ export class BookingsController {
   @ApiOperation({ summary: 'Get all bookings' }) // Describe the endpoint
   getAllBookings() {
     return this.bookingsService.getAllBookings();
+  }
+
+  @Patch(':id')
+  @ApiOperation({ summary: 'Update an existing booking' })
+  @ApiBody({
+    description: 'Data to update the booking',
+    schema: {
+      type: 'object',
+      properties: {
+        name: { type: 'string', example: 'Updated Name' },
+        description: { type: 'string', example: 'Updated Description' },
+        date: { type: 'string', format: 'date', example: '2023-10-02' },
+        time: { type: 'string', format: 'time', example: '11:00' },
+        room: { type: 'string', example: 'Room B' },
+        duration: { type: 'number', example: 90 },
+        attendees: {
+          type: 'array',
+          items: { type: 'string' },
+          example: ['attendee1@example.com', 'attendee2@example.com'],
+        },
+        status: { type: 'string', example: 'confirmed' },
+      },
+    },
+  })
+  updateBooking(
+    @Param('id') id: string,
+    @Body() updateData: Partial<CreateBookingDto>,
+  ) {
+    return this.bookingsService.updateBooking(id, updateData);
   }
 }

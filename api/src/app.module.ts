@@ -15,7 +15,8 @@ import { Booking } from './bookings/bookings.entity'; // Import the Booking enti
       password: process.env.DB_PASSWORD || 'admin',
       database: process.env.DB_NAME || 'conference_booking',
       entities: [Booking], // Explicitly specify entities
-      synchronize: true, // Set to false in production
+      synchronize: true, // Enable for development; disable in production
+      migrationsRun: true, // Automatically run migrations
     }),
     BookingsModule,
   ],

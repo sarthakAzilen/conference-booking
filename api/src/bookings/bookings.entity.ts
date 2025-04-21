@@ -1,7 +1,7 @@
 import { Entity, Column, PrimaryColumn, BeforeInsert } from 'typeorm';
 import { v4 as uuidv4 } from 'uuid';
 
-@Entity('booking') // Ensure the table name matches the database
+@Entity('booking')
 export class Booking {
   @PrimaryColumn()
   id: string;

@@ -43,4 +43,34 @@ describe('BookingsController (e2e)', () => {
         expect(Array.isArray(res.body)).toBe(true);
       });
   });
+
+  it('/bookings/:id (PATCH)', async () => {
+    const createResponse = await request(app.getHttpServer())
+      .post('/bookings')
+      .send({
+        name: 'John Doe',
+        description: 'Team Meeting',
+        date: '2023-10-01',
+        time: '10:00',
+        room: 'Room A',
+      })
+      .expect(201);
+
+    const bookingId = createResponse.body.booking.id;
+
+    return request(app.getHttpServer())
+      .patch(`/bookings/${bookingId}`)
+      .send({ description: 'Updated Meeting' })
+      .expect(200)
+      .expect((res) => {
+        expect(res.body).toHaveProperty(
+          'message',
+          'Booking updated successfully',
+        );
+        expect(res.body.booking).toHaveProperty(
+          'description',
+          'Updated Meeting',
+        );
+      });
+  });
 });

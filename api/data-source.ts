@@ -14,4 +14,5 @@ export const AppDataSource = new DataSource({
   entities: [Booking], // Add all your entities here
   migrations: ['./src/migrations/*.ts'], // Path to migrations
   synchronize: false, // Disable in production
+  migrationsRun: true, // Automatically run migrations
 });

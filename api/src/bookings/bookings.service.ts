@@ -24,4 +24,14 @@ export class BookingsService {
   async getAllBookings(): Promise<Booking[]> {
     return this.bookingsRepository.find();
   }
+
+  async updateBooking(id: string, updateData: Partial<CreateBookingDto>) {
+    const booking = await this.bookingsRepository.findOneBy({ id });
+    if (!booking) {
+      throw new Error('Booking not found');
+    }
+    Object.assign(booking, updateData);
+    await this.bookingsRepository.save(booking);
+    return { message: 'Booking updated successfully', booking };
+  }
 }
