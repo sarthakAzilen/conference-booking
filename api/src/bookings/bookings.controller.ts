@@ -32,7 +32,10 @@ export class BookingsController {
         description: { type: 'string', example: 'Updated Description' },
         date: { type: 'string', format: 'date', example: '2023-10-02' },
         time: { type: 'string', format: 'time', example: '11:00' },
-        room: { type: 'string', example: 'Room B' },
+        conferenceRoomId: {
+          type: 'string',
+          example: '550e8400-e29b-41d4-a716-446655440000',
+        },
         duration: { type: 'number', example: 90 },
         attendees: {
           type: 'array',

@@ -22,8 +22,8 @@ export class CreateBookingDto {
   @ApiProperty({ description: 'Duration of the booking in minutes' })
   duration: number;
 
-  @ApiProperty({ description: 'Room being booked' })
-  room: string;
+  @ApiProperty({ description: 'Conference Room ID being booked' })
+  conferenceRoomId: string;
 
   @ApiProperty({
     description: 'List of attendees for the booking',

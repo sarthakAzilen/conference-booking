@@ -23,7 +23,7 @@ describe('BookingsController (e2e)', () => {
         description: 'Team Meeting',
         date: '2023-10-01',
         time: '10:00',
-        room: 'Room A',
+        conferenceRoomId: '550e8400-e29b-41d4-a716-446655440000', // Updated from "room"
       })
       .expect(201)
       .expect((res) => {
@@ -52,7 +52,7 @@ describe('BookingsController (e2e)', () => {
         description: 'Team Meeting',
         date: '2023-10-01',
         time: '10:00',
-        room: 'Room A',
+        conferenceRoomId: '550e8400-e29b-41d4-a716-446655440000', // Updated from "room"
       })
       .expect(201);
 

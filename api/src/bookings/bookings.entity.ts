@@ -19,7 +19,7 @@ export class Booking {
   time: string;
 
   @Column()
-  room: string;
+  conferenceRoomId: string; // Updated from "room" to "conferenceRoomId"
 
   @Column({ nullable: true })
   duration: number;
