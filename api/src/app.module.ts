@@ -8,6 +8,7 @@ import { LoginModule } from './login/login.module';
 import { Register } from './register/register.entity'; // Import the Register entity
 import { ConferenceRoomModule } from './conference-room/conference-room.module';
 import { OfficeLocationModule } from './office-location/office-location.module';
+import { OfficeLocation } from './office-location/office-location.entity'; // Import OfficeLocation entity
 
 @Module({
   imports: [
@@ -18,7 +19,7 @@ import { OfficeLocationModule } from './office-location/office-location.module';
       username: process.env.DB_USERNAME || 'postgres',
       password: process.env.DB_PASSWORD || 'admin',
       database: process.env.DB_NAME || 'conference_booking',
-      entities: [Booking, Register], // Explicitly specify entities
+      entities: [Booking, Register, OfficeLocation], // Explicitly specify entities
       synchronize: true, // Enable for development; disable in production
       migrationsRun: true, // Automatically run migrations
     }),

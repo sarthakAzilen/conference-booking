@@ -2,10 +2,11 @@ import { ApiProperty } from '@nestjs/swagger';
 
 export class CreateConferenceRoomDto {
   @ApiProperty({
-    description: 'Office location of the conference room',
-    example: 'New York Office',
+    description:
+      'ID of the office location where the conference room is located',
+    example: '550e8400-e29b-41d4-a716-446655440000',
   })
-  officeLocation: string;
+  officeLocationId: string;
 
   @ApiProperty({
     description: 'Floor number where the conference room is located',

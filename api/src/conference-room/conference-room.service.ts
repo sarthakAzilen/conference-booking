@@ -16,7 +16,9 @@ export class ConferenceRoomService {
   }
 
   findAll() {
-    return this.conferenceRoomRepository.find();
+    return this.conferenceRoomRepository.find({
+      relations: ['officeLocation'],
+    });
   }
 
   update(id: string, data: Partial<ConferenceRoom>) {

@@ -19,7 +19,7 @@ export class ConferenceRoomController {
 
   @Post()
   @ApiOperation({ summary: 'Create a new conference room' })
-  @ApiBody({ type: CreateConferenceRoomDto }) // Specify the request body type
+  @ApiBody({ type: CreateConferenceRoomDto })
   create(@Body() data: CreateConferenceRoomDto) {
     return this.conferenceRoomService.create(data);
   }

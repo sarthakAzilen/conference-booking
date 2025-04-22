@@ -1,4 +1,11 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  ManyToOne,
+  JoinColumn,
+} from 'typeorm';
+import { OfficeLocation } from '../office-location/office-location.entity';
 
 @Entity('conference_room')
 export class ConferenceRoom {
@@ -11,9 +18,13 @@ export class ConferenceRoom {
   @Column()
   floor: string;
 
-  @Column()
-  location: string;
-
   @Column({ nullable: true })
   capacity: number;
+
+  @ManyToOne(() => OfficeLocation, { nullable: false, onDelete: 'CASCADE' })
+  @JoinColumn({ name: 'officeLocationId' })
+  officeLocation: OfficeLocation;
+
+  @Column()
+  officeLocationId: string; // Foreign key to OfficeLocation
 }

@@ -17,3 +17,5 @@ import { OfficeLocationController } from './office-location.controller';
   providers: [OfficeLocationService],
 })
 export class OfficeLocationModule {}
+
+export * from './dto/create-office-location.dto'; // Export the DTO
