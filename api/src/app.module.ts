@@ -9,6 +9,7 @@ import { Register } from './register/register.entity'; // Import the Register en
 import { ConferenceRoomModule } from './conference-room/conference-room.module';
 import { OfficeLocationModule } from './office-location/office-location.module';
 import { OfficeLocation } from './office-location/office-location.entity'; // Import OfficeLocation entity
+import { ProjectModule } from './project/project.module';
 
 @Module({
   imports: [
@@ -28,6 +29,7 @@ import { OfficeLocation } from './office-location/office-location.entity'; // Im
     LoginModule,
     ConferenceRoomModule,
     OfficeLocationModule,
+    ProjectModule,
   ],
   controllers: [],
   providers: [AppService],

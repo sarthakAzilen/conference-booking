@@ -11,6 +11,7 @@ export enum Role {
   HRAdmin = 'HR Admin',
   FacilityAdmin = 'Facility Admin',
   SuperAdmin = 'Super Admin',
+  ProjectManager = 'Project Manager', // New role added
 }
 
 @Entity('register') // This is the user table

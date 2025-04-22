@@ -18,7 +18,7 @@ export class RegisterController {
     @Body() createRegisterDto: CreateRegisterDto,
     @Req() req: Request & { user: { role: Role } }, // Update type to include headers
   ) {
-    const userRole = req.user.role; // Extract user role from the JWT payload
+    const userRole = req.user.role; // Handles ProjectManager role as well
 
     const result = await this.registerService.create(
       createRegisterDto,

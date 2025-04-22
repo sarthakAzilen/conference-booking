@@ -15,8 +15,10 @@ export class RegisterService {
   ) {}
 
   async create(createRegisterDto: CreateRegisterDto, userRole: Role) {
-    if (userRole !== Role.HRAdmin) {
-      throw new ForbiddenException('Only HR Admins can register users.');
+    if (userRole !== Role.HRAdmin && userRole !== Role.ProjectManager) {
+      throw new ForbiddenException(
+        'Only HR Admins or Project Managers can register users.',
+      );
     }
     const hashedPassword = await bcrypt.hash(createRegisterDto.password, 10); // Encrypt the password
     const register = this.registerRepository.create({
@@ -27,7 +29,8 @@ export class RegisterService {
     try {
       await this.registerRepository.save(register);
     } catch (error) {
-      if (error.code === '23505') {
+      const errorRes = error as { code: string };
+      if (errorRes.code === '23505') {
         // PostgreSQL unique violation error code
         throw new ForbiddenException('Employee ID must be unique.');
       }
