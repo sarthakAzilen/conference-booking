@@ -14,8 +14,10 @@ export class BookingsService {
   async createBooking(bookingData: CreateBookingDto) {
     const booking = this.bookingsRepository.create({
       ...bookingData,
-      conferenceRoomId: bookingData.conferenceRoomId, // Updated from "room"
-      projectId: bookingData.projectId, // Handle projectId
+      conferenceRoom: { id: bookingData.conferenceRoomId }, // Map to nested conferenceRoom object
+      project: bookingData.projectId
+        ? { id: bookingData.projectId }
+        : undefined, // Map to nested project object
       attendees: bookingData.attendees || [], // Default to an empty array if not provided
       status: bookingData.status || 'pending', // Default to 'pending' if not provided
     });
@@ -35,5 +37,14 @@ export class BookingsService {
     Object.assign(booking, updateData);
     await this.bookingsRepository.save(booking);
     return { message: 'Booking updated successfully', booking };
+  }
+
+  async deleteBooking(id: string) {
+    const booking = await this.bookingsRepository.findOneBy({ id });
+    if (!booking) {
+      throw new Error('Booking not found');
+    }
+    await this.bookingsRepository.delete({ id });
+    return { message: 'Booking deleted successfully' };
   }
 }

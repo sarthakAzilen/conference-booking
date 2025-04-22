@@ -1,4 +1,12 @@
-import { Controller, Post, Body, Get, Patch, Param } from '@nestjs/common';
+import {
+  Controller,
+  Post,
+  Body,
+  Get,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { BookingsService } from './bookings.service';
 import { CreateBookingDto } from './dto/create-booking.dto';
 import { ApiTags, ApiOperation, ApiBody } from '@nestjs/swagger';
@@ -54,5 +62,11 @@ export class BookingsController {
     @Body() updateData: Partial<CreateBookingDto>,
   ) {
     return this.bookingsService.updateBooking(id, updateData);
+  }
+
+  @Delete(':id')
+  @ApiOperation({ summary: 'Delete a booking' }) // Describe the endpoint
+  deleteBooking(@Param('id') id: string) {
+    return this.bookingsService.deleteBooking(id);
   }
 }
