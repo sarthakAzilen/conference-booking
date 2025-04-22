@@ -10,7 +10,10 @@ export class BookingsController {
 
   @Post()
   @ApiOperation({ summary: 'Create a new booking' }) // Describe the endpoint
-  @ApiBody({ type: CreateBookingDto }) // Specify the request body type, including attendees
+  @ApiBody({
+    type: CreateBookingDto,
+    description: 'Data to create a new booking, including projectId',
+  }) // Specify the request body type, including attendees
   createBooking(@Body() bookingData: CreateBookingDto) {
     return this.bookingsService.createBooking(bookingData);
   }

@@ -15,6 +15,7 @@ export class BookingsService {
     const booking = this.bookingsRepository.create({
       ...bookingData,
       conferenceRoomId: bookingData.conferenceRoomId, // Updated from "room"
+      projectId: bookingData.projectId, // Handle projectId
       attendees: bookingData.attendees || [], // Default to an empty array if not provided
       status: bookingData.status || 'pending', // Default to 'pending' if not provided
     });

@@ -38,6 +38,13 @@ export class CreateBookingDto {
   })
   project?: string;
 
+  @ApiProperty({
+    description: `Project ID associated with the booking`,
+    example: '550e8400-e29b-41d4-a716-446655440000',
+    required: false,
+  })
+  projectId?: string;
+
   @ApiProperty({ description: 'Status of the booking', default: 'pending' })
   status: string;
 }
