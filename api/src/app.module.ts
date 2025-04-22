@@ -1,12 +1,13 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { BookingsModule } from './bookings/bookings.module';
 import { Booking } from './bookings/bookings.entity'; // Import the Booking entity
 import { RegisterModule } from './register/register.module';
 import { LoginModule } from './login/login.module';
 import { Register } from './register/register.entity'; // Import the Register entity
+import { ConferenceRoomModule } from './conference-room/conference-room.module';
+import { OfficeLocationModule } from './office-location/office-location.module';
 
 @Module({
   imports: [
@@ -24,8 +25,10 @@ import { Register } from './register/register.entity'; // Import the Register en
     BookingsModule,
     RegisterModule,
     LoginModule,
+    ConferenceRoomModule,
+    OfficeLocationModule,
   ],
-  controllers: [AppController],
+  controllers: [],
   providers: [AppService],
 })
 export class AppModule {}
