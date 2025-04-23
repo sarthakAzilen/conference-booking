@@ -36,6 +36,12 @@ export class LoginService {
         secret: process.env.JWT_SECRET ?? 'default_secret', // Ensure this matches the .env JWT_SECRET
       },
     );
-    return { message: 'Login successful', token };
+    return {
+      message: 'Login successful',
+      token,
+      role: user.role,
+      email: user.email,
+      name: user.name,
+    };
   }
 }
