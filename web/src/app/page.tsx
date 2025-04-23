@@ -1,87 +1,77 @@
-import Image from "next/image";
+"use client";
+
 import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { useLogin } from "../hooks/useLogin";
+import useUserStore from "../store/userStore";
 
-export default function Home() {
-  const [formData, setFormData] = useState({
-    name: "",
-    date: "",
-    time: "",
-    room: "",
+export default function Login() {
+  const [credentials, setCredentials] = useState({
+    username: "",
+    password: "",
   });
+  const router = useRouter();
+  const login = useLogin();
+  const setUser = useUserStore((state) => state.setUser);
 
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
-  ) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+    setCredentials({ ...credentials, [name]: value });
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Booking Details:", formData);
-    // Add API call to submit booking details
+    login.mutate(credentials, {
+      onSuccess: (data) => {
+        setUser(data); // Save user info in Zustand store
+        router.push("/home"); // Redirect to home page
+      },
+      onError: (error) => {
+        console.error("Login failed:", error);
+        alert("Invalid username or password");
+      },
+    });
   };
 
   return (
-    <div className="min-h-screen p-8 pb-20 sm:p-20">
-      <main className="flex flex-col items-center gap-8">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <h1 className="text-2xl font-bold">Conference Room Booking</h1>
-        <form
-          onSubmit={handleSubmit}
-          className="flex flex-col gap-4 w-full max-w-md"
-        >
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-purple-500 via-pink-500 to-red-500">
+      <div className="bg-white rounded-lg shadow-lg p-8 w-full max-w-md">
+        <h1 className="text-2xl font-bold text-center text-gray-800 mb-6">
+          Welcome Back
+        </h1>
+        <form onSubmit={handleSubmit} className="flex flex-col gap-4">
           <input
             type="text"
-            name="name"
-            placeholder="Your Name"
-            value={formData.name}
+            name="username"
+            placeholder="Username"
+            value={credentials.username}
             onChange={handleChange}
-            className="border p-2 rounded"
+            className="border border-gray-300 p-3 rounded focus:outline-none focus:ring-2 focus:ring-purple-500"
             required
           />
           <input
-            type="date"
-            name="date"
-            value={formData.date}
+            type="password"
+            name="password"
+            placeholder="Password"
+            value={credentials.password}
             onChange={handleChange}
-            className="border p-2 rounded"
+            className="border border-gray-300 p-3 rounded focus:outline-none focus:ring-2 focus:ring-purple-500"
             required
           />
-          <input
-            type="time"
-            name="time"
-            value={formData.time}
-            onChange={handleChange}
-            className="border p-2 rounded"
-            required
-          />
-          <select
-            name="room"
-            value={formData.room}
-            onChange={handleChange}
-            className="border p-2 rounded"
-            required
+          <button
+            type="submit"
+            className="bg-purple-500 text-white p-3 rounded hover:bg-purple-600 transition"
           >
-            <option value="" disabled>
-              Select Room
-            </option>
-            <option value="Room A">Room A</option>
-            <option value="Room B">Room B</option>
-            <option value="Room C">Room C</option>
-          </select>
-          <button type="submit" className="bg-blue-500 text-white p-2 rounded">
-            Book Now
+            Login
           </button>
         </form>
-      </main>
+        <p className="text-center text-sm text-gray-600 mt-4">
+          {"Don't have an account? "}
+          <a href="#" className="text-purple-500 hover:underline">
+            Sign up
+          </a>
+        </p>
+      </div>
     </div>
   );
 }
